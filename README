@@ -1,0 +1,16 @@
+
+
+This is a simple web crawler for urlquery.net. 
+Just launch it every hour or so using crontab.
+This is based on Scrapy framework.
+
+
+Require :
+- scrapy 0.14.1
+- mongodb
+
+Usage:
+$ scrapy crawl urlquery
+
+
+
