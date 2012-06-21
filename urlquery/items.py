@@ -6,13 +6,15 @@
 from scrapy.item import Item, Field
 
 class UrlqueryItem(Item):
-	url  = Field()
-	ip = Field()
-	asn = Field()
+	url      = Field()
+	domain   = Field()
+	filename = Field()
+	ip       = Field()
+	asn      = Field()
 	location = Field()
 	reportCreated = Field()
-	alerts = Field()
+	alerts     = Field()
 	reputation = Field()
-	userAgent = Field()
+	userAgent  = Field()
 	adobeVersion = Field()
-	javaVersion = Field()
+	javaVersion  = Field()

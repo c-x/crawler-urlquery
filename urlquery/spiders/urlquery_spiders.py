@@ -6,12 +6,13 @@ from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
 
 from urlquery.items import UrlqueryItem
 
+import re
+
 class UrlQuerySpider(CrawlSpider):
 	name = 'urlquery'
 
 	allowed_domains = ['urlquery.net']
 	start_urls      = ['http://www.urlquery.net']
-
 
 	rules = (
 		Rule(
@@ -24,15 +25,23 @@ class UrlQuerySpider(CrawlSpider):
 		data = hxs.select('//table[@class="ui-widget ui-widget-content"]/tbody/tr/td[2]/text()').extract()
 
 		i = UrlqueryItem()
-		i['url'] = data[0].strip()
-		i['ip']  = data[1].strip()
-		i['asn'] = data[2].strip()
-		i['location'] = data[3].strip()
-		i['reportCreated'] = data[4].strip()
-		i['alerts'] = data[5].strip()
-		i['reputation'] = data[7].strip()
-		i['userAgent'] = data[8].strip()
+		i['url']          = data[0].strip()
+		i['ip']           = data[1].strip()
+		i['asn']          = data[2].strip()
+		i['location']     = data[3].strip()
+		i['reportCreated']= data[4].strip()
+		i['alerts']       = data[5].strip()
+		i['reputation']   = data[7].strip()
+		i['userAgent']    = data[8].strip()
 		i['adobeVersion'] = data[9].strip()
-		i['javaVersion'] = data[10].strip()
+		i['javaVersion']  = data[10].strip()
 
-		return item
+
+		s = re.sub('^http://', '', i['url'])
+		tmp = s.split('/')
+
+		i['domain']   = tmp.pop(0)
+		i['filename'] = '/' + '/'.join(tmp)
+
+		return i
+
